@@ -53,7 +53,7 @@
   },
   {
    "key": "counting",
-   "title": "CLEVR counting (black spheres)",
+   "title": "CLEVR counting",
    "highlight_rule": "All single-token variants of the numbers one..nine (the scene-level target).",
    "images": [
     {
@@ -81,7 +81,7 @@
  ],
  "method_labels": {
   "plain_pip": "Ours",
-  "logit_lens": "Logit lens",
+  "logit_lens": "Logit-lens",
   "j_lens": "J-lens",
   "r_lens": "R-lens"
  },

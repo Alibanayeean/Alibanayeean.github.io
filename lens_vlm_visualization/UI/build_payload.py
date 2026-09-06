@@ -81,7 +81,7 @@ DATA_DIR = ROOT / "data"
 IMAGES_OUT = ROOT / "images"
 METHODS = ("plain_pip", "logit_lens", "j_lens", "r_lens")   # display order: ours first
 METHOD_LABELS = {
-    "plain_pip": "Ours (PIP, self-only α=1,β=1,γ=1)",
+    "plain_pip": "Ours",
     "logit_lens": "Logit lens",
     "j_lens": "J-lens",
     "r_lens": "R-lens",

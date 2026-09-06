@@ -33,9 +33,15 @@
   .prompt .tok.image{background:#eaf1fd;border-color:#c6d9f7}
   .prompt .note{color:var(--muted);font-size:12px;margin-top:8px}
   .stage{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+  .image-column{display:flex;flex-direction:column;gap:8px;max-width:520px}
+  .image-labels{display:flex;flex-wrap:wrap;gap:6px;line-height:1.3;min-height:0}
+  .image-label{display:inline-block;padding:4px 9px;border-radius:999px;color:#fff;
+               background:var(--accent);font-size:12px;font-weight:650;cursor:pointer;
+               transition:transform .12s ease,box-shadow .12s ease}
+  .image-label:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(47,111,219,.35)}
   .imgwrap{position:relative;display:inline-block;line-height:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
   .imgwrap img{display:block;max-width:520px;height:auto}
-  .grid{position:absolute;inset:0;display:grid}
+  .grid{position:absolute;inset:0;display:grid;z-index:2}
   .cell{border:.5px solid rgba(255,255,255,.16);cursor:pointer}
   .cell:hover{background:rgba(47,111,219,.34)}
   .cell.ingroup{background:rgba(10,125,52,.26)}
@@ -77,9 +83,12 @@
   <main>
     <div class="prompt" id="prompt"></div>
     <div class="stage">
-      <div class="imgwrap" id="imgwrap">
-        <img id="img" alt="">
-        <div class="grid" id="grid"></div>
+      <div class="image-column">
+        <div class="image-labels" id="imageLabels" aria-live="polite"></div>
+        <div class="imgwrap" id="imgwrap">
+          <img id="img" alt="">
+          <div class="grid" id="grid"></div>
+        </div>
       </div>
       <div class="info" id="info"></div>
     </div>
@@ -130,12 +139,29 @@ async function selectImage(i){
   IMG._col = {};
   IMG.groups.forEach((g,gi)=> g.words.forEach((w,k)=>{ IMG._col[g.word_cols[k]] = {...w, gi}; }));
   $('#img').src = IMG.image_file;
-  renderPrompt(); renderGrid(); PATCH=null; PATCHDATA=null; renderInfo(); renderTable();
+  renderPrompt(); renderImageLabels(); renderGrid(); PATCH=null; PATCHDATA=null; renderInfo(); renderTable();
 }
 function renderPrompt(){
   const toks = IMG.prompt_tokens.map(t=>`<span class="tok ${t.kind}">${esc(t.text)}</span>`).join('');
   $('#prompt').innerHTML =
     `<div class="seq" style="margin-top:6px">${toks}</div>`;
+}
+function renderImageLabels(){
+  const byLabel = new Map();
+  IMG.groups.forEach((g,gi)=>{
+    if(!g.label) return;
+    if(!byLabel.has(g.label)) byLabel.set(g.label, []);
+    byLabel.get(g.label).push(gi);
+  });
+  const labels = $('#imageLabels');
+  labels.innerHTML = [...byLabel]
+    .map(([label,gis])=>`<span class="image-label" data-gis="${gis.join(',')}">${esc(label)}</span>`)
+    .join('');
+  labels.onmouseover = e => {
+    const label = e.target.closest('.image-label[data-gis]');
+    if(label) markGroups(label.dataset.gis.split(',').map(Number));
+  };
+  labels.onmouseout = () => markGroups([]);
 }
 function renderGrid(){
   const g = $('#grid');
@@ -168,8 +194,12 @@ function renderInfo(){
   $('#info').onmouseout = () => markGroup(null);
 }
 function markGroup(gi){
+  markGroups(gi===null ? [] : [gi]);
+}
+function markGroups(gis){
+  const groupIds = new Set(gis);
   [...$('#grid').children].forEach((c,p)=>
-    c.classList.toggle('ingroup', gi!==null && IMG.patch_groups[p].includes(gi)));
+    c.classList.toggle('ingroup', groupIds.size>0 && IMG.patch_groups[p].some(gi=>groupIds.has(gi))));
 }
 function renderTable(){
   if(PATCH===null){ $('#table').innerHTML=''; return; }
