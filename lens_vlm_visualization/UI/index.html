@@ -1,0 +1,236 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>VLM patch explorer — Qwen3.5-9B</title>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1b1b1f; --muted:#6b6f76; --line:#e3e5e9; --panel:#f7f8fa;
+    --hit:#0a7d34; --hitbg:#e3f6e8; --sel:#d92c2c; --accent:#2f6fdb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--fg);background:var(--bg)}
+  header{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+  header h1{font-size:15px;margin:0;font-weight:650}
+  header .sub{color:var(--muted);font-size:12px}
+  .layout{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 50px)}
+  .side{border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;max-height:calc(100vh - 50px)}
+  .side h2{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+           margin:14px 12px 6px;font-weight:650}
+  .tabs{display:flex;gap:6px;padding:10px 12px 4px}
+  .tab{flex:1;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff;
+       cursor:pointer;font-size:12px;text-align:center}
+  .tab.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  .imglist{list-style:none;margin:0;padding:0 8px 16px}
+  .imglist li{padding:6px 8px;border-radius:6px;cursor:pointer;font-size:12px;
+              display:flex;justify-content:space-between;gap:8px}
+  .imglist li:hover{background:#eef1f5}
+  .imglist li.on{background:var(--accent);color:#fff;font-weight:600}
+  .imglist li .n{opacity:.65;font-size:11px}
+  main{padding:16px 20px 60px;overflow-x:auto}
+  .prompt{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:14px}
+  .prompt .seq{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+  .prompt .tok{display:inline-block;padding:2px 6px;border-radius:4px;background:#fff;border:1px solid var(--line);margin:2px 3px 2px 0}
+  .prompt .tok.image{background:#eaf1fd;border-color:#c6d9f7}
+  .prompt .note{color:var(--muted);font-size:12px;margin-top:8px}
+  .stage{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+  .image-column{display:flex;flex-direction:column;gap:8px;max-width:520px}
+  .image-labels{display:flex;flex-wrap:wrap;gap:6px;line-height:1.3;min-height:0}
+  .image-label{display:inline-block;padding:4px 9px;border-radius:999px;color:#fff;
+               background:var(--accent);font-size:12px;font-weight:650;cursor:pointer;
+               transition:transform .12s ease,box-shadow .12s ease}
+  .image-label:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(47,111,219,.35)}
+  .imgwrap{position:relative;display:inline-block;line-height:0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .imgwrap img{display:block;max-width:520px;height:auto}
+  .grid{position:absolute;inset:0;display:grid;z-index:2}
+  .cell{border:.5px solid rgba(255,255,255,.16);cursor:pointer}
+  .cell:hover{background:rgba(47,111,219,.34)}
+  .cell.ingroup{background:rgba(10,125,52,.26)}
+  .cell.sel{background:rgba(217,44,44,.5);border:1.5px solid #fff}
+  .info{min-width:260px;flex:1}
+  .info .row{margin-bottom:8px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;background:var(--hitbg);
+         color:var(--hit);font-weight:600;font-size:12px;margin:2px 4px 2px 0;cursor:pointer;border:1px solid #bfe6cb}
+  .badge.none{background:#f2f3f5;color:var(--muted);border-color:var(--line);cursor:default}
+  .views{display:flex;gap:6px;margin:6px 0 12px}
+  .views button{padding:6px 12px;border:1px solid var(--line);background:#fff;border-radius:6px;cursor:pointer;font-size:12px}
+  .views button.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+  table{border-collapse:collapse;font-size:12px}
+  th,td{border:1px solid var(--line);padding:5px 7px;vertical-align:top}
+  th{background:var(--panel);position:sticky;top:0;font-weight:650;text-align:left}
+  td.layer,th.layer{background:var(--panel);font-variant-numeric:tabular-nums;text-align:right;
+                    font-weight:600;width:46px;position:sticky;left:0}
+  .tok{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .entry{display:flex;justify-content:space-between;gap:10px;white-space:nowrap}
+  .entry.hit{background:var(--hitbg);color:var(--hit);font-weight:650;border-radius:3px;padding:0 3px;margin:0 -3px}
+  .p{color:var(--muted);font-variant-numeric:tabular-nums}
+  .entry.hit .p{color:var(--hit)}
+  .na{color:var(--muted);font-style:italic}
+  .empty{color:var(--muted);font-style:italic;padding:14px 0}
+  .pos{color:#0a7d34}.neg{color:#b3261e}
+</style>
+
+<header>
+  <h1>VLM patch explorer — Qwen3.5-9B</h1>
+  <span class="sub" id="hdr"></span>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <div class="tabs" id="tabs"></div>
+    <h2>Images</h2>
+    <ul class="imglist" id="imglist"></ul>
+  </aside>
+  <main>
+    <div class="prompt" id="prompt"></div>
+    <div class="stage">
+      <div class="image-column">
+        <div class="image-labels" id="imageLabels" aria-live="polite"></div>
+        <div class="imgwrap" id="imgwrap">
+          <img id="img" alt="">
+          <div class="grid" id="grid"></div>
+        </div>
+      </div>
+      <div class="info" id="info"></div>
+    </div>
+    <div class="views">
+      <button id="btnTop" class="on">Top-10 tokens</button>
+      <button id="btnCen">Centered logits</button>
+    </div>
+    <div id="table"></div>
+  </main>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+let INDEX=null, DS=null, IMG=null, PATCH=null, PATCHDATA=null, VIEW='top';
+
+const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+// Show whitespace explicitly -- this project's standing convention.
+const show = s => esc(s.replace(/^ /,'␣').replace(/\n/g,'⏎').replace(/\t/g,'⇥')) || '␀';
+
+async function boot(){
+  INDEX = await (await fetch('data/index.json')).json();
+  $('#tabs').innerHTML = INDEX.datasets.map((d,i)=>
+    `<div class="tab${i===0?' on':''}" data-k="${d.key}">${esc(d.title.split(' (')[0])}</div>`).join('');
+  $('#tabs').onclick = e => { const k=e.target.dataset.k; if(k) selectDataset(k); };
+  $('#btnTop').onclick = ()=>{VIEW='top';syncViews();renderTable();};
+  $('#btnCen').onclick = ()=>{VIEW='cen';syncViews();renderTable();};
+  selectDataset(INDEX.datasets[0].key);
+}
+function syncViews(){
+  $('#btnTop').className = VIEW==='top'?'on':'';
+  $('#btnCen').className = VIEW==='cen'?'on':'';
+}
+function selectDataset(key){
+  DS = INDEX.datasets.find(d=>d.key===key);
+  [...$('#tabs').children].forEach(t=>t.classList.toggle('on', t.dataset.k===key));
+  $('#hdr').textContent = `${DS.title} — ${DS.images.length} images · highlight rule: ${DS.highlight_rule}`;
+  $('#imglist').innerHTML = DS.images.map((im,i)=>
+    `<li data-i="${i}"><span>${esc(im.image_name)}</span><span class="n">${im.num_patches}p</span></li>`).join('');
+  $('#imglist').onclick = e => { const li=e.target.closest('li'); if(li) selectImage(+li.dataset.i); };
+  selectImage(0);
+}
+async function selectImage(i){
+  [...$('#imglist').children].forEach((li,j)=>li.classList.toggle('on', j===i));
+  const meta = DS.images[i];
+  IMG = await (await fetch(`${meta.dir}/index.json`)).json();
+  IMG._dir = meta.dir;
+  // col -> {surface, id, group}
+  IMG._col = {};
+  IMG.groups.forEach((g,gi)=> g.words.forEach((w,k)=>{ IMG._col[g.word_cols[k]] = {...w, gi}; }));
+  $('#img').src = IMG.image_file;
+  renderPrompt(); renderImageLabels(); renderGrid(); PATCH=null; PATCHDATA=null; renderInfo(); renderTable();
+}
+function renderPrompt(){
+  const toks = IMG.prompt_tokens.map(t=>`<span class="tok ${t.kind}">${esc(t.text)}</span>`).join('');
+  $('#prompt').innerHTML =
+    `<div class="seq" style="margin-top:6px">${toks}</div>`;
+}
+function renderImageLabels(){
+  const byLabel = new Map();
+  IMG.groups.forEach((g,gi)=>{
+    if(!g.label) return;
+    if(!byLabel.has(g.label)) byLabel.set(g.label, []);
+    byLabel.get(g.label).push(gi);
+  });
+  const labels = $('#imageLabels');
+  labels.innerHTML = [...byLabel]
+    .map(([label,gis])=>`<span class="image-label" data-gis="${gis.join(',')}">${esc(label)}</span>`)
+    .join('');
+  labels.onmouseover = e => {
+    const label = e.target.closest('.image-label[data-gis]');
+    if(label) markGroups(label.dataset.gis.split(',').map(Number));
+  };
+  labels.onmouseout = () => markGroups([]);
+}
+function renderGrid(){
+  const g = $('#grid');
+  g.style.gridTemplateColumns = `repeat(${IMG.grid_w},1fr)`;
+  g.style.gridTemplateRows = `repeat(${IMG.grid_h},1fr)`;
+  g.innerHTML = Array.from({length:IMG.num_patches},(_,p)=>`<div class="cell" data-p="${p}"></div>`).join('');
+  g.onclick = e => { const c=e.target.closest('.cell'); if(c) selectPatch(+c.dataset.p); };
+}
+async function selectPatch(p){
+  PATCH = p;
+  PATCHDATA = await (await fetch(`${IMG._dir}/patches/${p}.json`)).json();
+  [...$('#grid').children].forEach((c,j)=>c.classList.toggle('sel', j===p));
+  renderInfo(); renderTable();
+}
+function relatedCols(){ return PATCHDATA ? PATCHDATA.cols : []; }
+function relatedIds(){ return new Set(relatedCols().map(c=>IMG._col[c].id)); }
+function renderInfo(){
+  if(PATCH===null){ $('#info').innerHTML = `<div class="empty">Click a patch on the image to read it out.</div>`; return; }
+  const r = Math.floor(PATCH/IMG.grid_w), c = PATCH%IMG.grid_w;
+  const gis = [...new Set(relatedCols().map(x=>IMG._col[x].gi))];
+  const badges = gis.length
+    ? gis.map(gi=>`<span class="badge" data-gi="${gi}">${esc(IMG.groups[gi].label)} · ${IMG.groups[gi].words.length} words</span>`).join('')
+    : `<span class="badge none">no annotated object covers this patch — nothing to highlight</span>`;
+  $('#info').innerHTML =
+    `<div class="row"><b>Patch ${PATCH}</b> — row ${r}, col ${c} of ${IMG.grid_h}×${IMG.grid_w}</div>
+     <div class="row">Semantically related to this patch (from the annotations):<br>${badges}</div>
+     ${IMG.true_count!=null?`<div class="row">Scene contains <b>${IMG.true_count}</b> objects.</div>`:''}
+     <div class="row" style="color:var(--muted)">Hover a label to see the patches it covers.</div>`;
+  $('#info').onmouseover = e => { const b=e.target.closest('.badge[data-gi]'); if(b) markGroup(+b.dataset.gi); };
+  $('#info').onmouseout = () => markGroup(null);
+}
+function markGroup(gi){
+  markGroups(gi===null ? [] : [gi]);
+}
+function markGroups(gis){
+  const groupIds = new Set(gis);
+  [...$('#grid').children].forEach((c,p)=>
+    c.classList.toggle('ingroup', groupIds.size>0 && IMG.patch_groups[p].some(gi=>groupIds.has(gi))));
+}
+function renderTable(){
+  if(PATCH===null){ $('#table').innerHTML=''; return; }
+  const methods = IMG.methods, labels = IMG.method_labels;
+  const layers = []; for(let L=32;L>=1;L--) layers.push(L);
+  const ids = relatedIds(), cols = relatedCols();
+  let html = `<table><thead><tr><th class="layer">layer</th>` +
+    methods.map(m=>`<th>${esc(labels[m])}</th>`).join('') + `</tr></thead><tbody>`;
+  for(const L of layers){
+    html += `<tr><td class="layer">${L}</td>`;
+    for(const m of methods){
+      const cell = PATCHDATA.methods[m][String(L)];
+      if(!cell){ html += `<td class="na">no translator</td>`; continue; }
+      if(VIEW==='top'){
+        html += `<td>` + cell.top.map(([vi,pr])=>{
+          const [surface,id] = IMG.vocab[vi];
+          return `<div class="entry${ids.has(id)?' hit':''}"><span class="tok">${show(surface)}</span>` +
+                 `<span class="p">${pr.toFixed(3)}</span></div>`;
+        }).join('') + `</td>`;
+      } else {
+        if(!cell.cen){ html += `<td class="na">no related words</td>`; continue; }
+        html += `<td>` + cols.map((c,k)=>{
+          const v = cell.cen[k], info = IMG._col[c];
+          return `<div class="entry"><span class="tok">${show(info.surface)}</span>` +
+                 `<span class="p ${v>=0?'pos':'neg'}">${v>=0?'+':''}${v.toFixed(1)}</span></div>`;
+        }).join('') + `</td>`;
+      }
+    }
+    html += `</tr>`;
+  }
+  $('#table').innerHTML = html + `</tbody></table>`;
+}
+boot();
+</script>

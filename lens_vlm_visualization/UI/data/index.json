@@ -1,0 +1,83 @@
+{
+ "datasets": [
+  {
+   "key": "coco",
+   "title": "COCO (objects)",
+   "highlight_rule": "Words of the object(s) whose mask covers the selected patch.",
+   "images": [
+    {
+     "stem": "000000060835",
+     "image_name": "000000060835.jpg",
+     "num_patches": 300,
+     "num_groups": 3,
+     "dir": "data/coco/000000060835"
+    },
+    {
+     "stem": "000000077595",
+     "image_name": "000000077595.jpg",
+     "num_patches": 260,
+     "num_groups": 3,
+     "dir": "data/coco/000000077595"
+    },
+    {
+     "stem": "000000274687",
+     "image_name": "000000274687.jpg",
+     "num_patches": 300,
+     "num_groups": 3,
+     "dir": "data/coco/000000274687"
+    },
+    {
+     "stem": "000000283412",
+     "image_name": "000000283412.jpg",
+     "num_patches": 260,
+     "num_groups": 3,
+     "dir": "data/coco/000000283412"
+    },
+
+    {
+     "stem": "000000102707",
+     "image_name": "000000102707.jpg",
+     "num_patches": 361,
+     "num_groups": 3,
+     "dir": "data/coco/000000102707"
+    },
+
+    {
+     "stem": "000000107087",
+     "image_name": "000000107087.jpg",
+     "num_patches": 260,
+     "num_groups": 3,
+     "dir": "data/coco/000000107087"
+    }
+   ]
+  },
+  {
+   "key": "counting",
+   "title": "CLEVR counting",
+   "highlight_rule": "All single-token variants of the numbers one..nine (the scene-level target).",
+   "images": [
+    {
+     "stem": "BLACK_SPHERES_new_000000",
+     "image_name": "BLACK_SPHERES_new_000000.png",
+     "num_patches": 300,
+     "num_groups": 9,
+     "dir": "data/counting/BLACK_SPHERES_new_000000"
+    }
+   ]
+  }
+ ],
+ "methods": [
+  "plain_pip",
+  "logit_lens",
+  "j_lens",
+  "r_lens"
+ ],
+ "method_labels": {
+  "plain_pip": "Ours",
+  "logit_lens": "Logit-lens",
+  "j_lens": "J-lens",
+  "r_lens": "R-lens"
+ },
+ "top_k": 10,
+ "prompt_note": ""
+}
