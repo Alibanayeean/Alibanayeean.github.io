@@ -1,0 +1,1002 @@
+{
+  "tasks": [
+    {
+      "task": "typo_experiment",
+      "title": "Typo",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "typo-field",
+          "example_id": "typo-field",
+          "group_kind": null,
+          "margin": 3027.84,
+          "mean_ranks": {
+            "plain_pip": 456.3,
+            "logit_lens": 26034.1,
+            "j_lens": 6709.9,
+            "r_lens": 3484.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-field.json",
+          "num_positions": 1,
+          "hit_positions": [
+            11
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "typo-already",
+          "example_id": "typo-already",
+          "group_kind": null,
+          "margin": 881.58,
+          "mean_ranks": {
+            "plain_pip": 1676.0,
+            "logit_lens": 17230.4,
+            "j_lens": 13122.3,
+            "r_lens": 2557.6
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-already.json",
+          "num_positions": 1,
+          "hit_positions": [
+            6
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "typo-because",
+          "example_id": "typo-because",
+          "group_kind": null,
+          "margin": 531.0,
+          "mean_ranks": {
+            "plain_pip": 129.9,
+            "logit_lens": 3639.6,
+            "j_lens": 1382.2,
+            "r_lens": 660.9
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-because.json",
+          "num_positions": 1,
+          "hit_positions": [
+            10
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "typo-often",
+          "example_id": "typo-often",
+          "group_kind": null,
+          "margin": 388.13,
+          "mean_ranks": {
+            "plain_pip": 300.6,
+            "logit_lens": 5919.0,
+            "j_lens": 1334.1,
+            "r_lens": 688.7
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-often.json",
+          "num_positions": 1,
+          "hit_positions": [
+            8
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "typo-February",
+          "example_id": "typo-February",
+          "group_kind": null,
+          "margin": 50.71,
+          "mean_ranks": {
+            "plain_pip": 108.9,
+            "logit_lens": 9066.1,
+            "j_lens": 763.5,
+            "r_lens": 159.6
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-February.json",
+          "num_positions": 1,
+          "hit_positions": [
+            9
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "typo-million",
+          "example_id": "typo-million",
+          "group_kind": null,
+          "margin": 8.35,
+          "mean_ranks": {
+            "plain_pip": 132.5,
+            "logit_lens": 4405.3,
+            "j_lens": 292.8,
+            "r_lens": 140.8
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-million.json",
+          "num_positions": 1,
+          "hit_positions": [
+            6
+          ]
+        },
+        {
+          "appended": true,
+          "uid": "typo-program",
+          "example_id": "typo-program",
+          "group_kind": null,
+          "margin": -126.81,
+          "mean_ranks": {
+            "plain_pip": 263.9,
+            "logit_lens": 248.7,
+            "j_lens": 850.1,
+            "r_lens": 137.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-program.json",
+          "num_positions": 1,
+          "hit_positions": [
+            5
+          ]
+        },
+        {
+          "appended": true,
+          "uid": "typo-product",
+          "example_id": "typo-product",
+          "group_kind": null,
+          "margin": -7.1,
+          "mean_ranks": {
+            "plain_pip": 341.3,
+            "logit_lens": 761.6,
+            "j_lens": 4670.1,
+            "r_lens": 334.2
+          },
+          "best_baseline": "r_lens",
+          "file": "data/typo_experiment/typo-product.json",
+          "num_positions": 1,
+          "hit_positions": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "task": "multihop_experiment",
+      "title": "Multihop",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "super-smallest-continent",
+          "example_id": "super-smallest-continent",
+          "group_kind": null,
+          "margin": 1113.45,
+          "mean_ranks": {
+            "plain_pip": 26.6,
+            "logit_lens": 6482.1,
+            "j_lens": 2768.5,
+            "r_lens": 1140.0
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multihop_experiment/super-smallest-continent.json",
+          "num_positions": 4,
+          "hit_positions": [
+            5
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "inv-roots-opposite",
+          "example_id": "inv-roots-opposite",
+          "group_kind": null,
+          "margin": 150.29,
+          "mean_ranks": {
+            "plain_pip": 17.2,
+            "logit_lens": 477.1,
+            "j_lens": 965.4,
+            "r_lens": 167.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multihop_experiment/inv-roots-opposite.json",
+          "num_positions": 5,
+          "hit_positions": [
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "inv-balloon-opposite",
+          "example_id": "inv-balloon-opposite",
+          "group_kind": null,
+          "margin": 121.87,
+          "mean_ranks": {
+            "plain_pip": 26.3,
+            "logit_lens": 1318.8,
+            "j_lens": 3771.8,
+            "r_lens": 148.2
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multihop_experiment/inv-balloon-opposite.json",
+          "num_positions": 5,
+          "hit_positions": [
+            11
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "month-7-namedafter",
+          "example_id": "month-7-namedafter",
+          "group_kind": null,
+          "margin": 20.1,
+          "mean_ranks": {
+            "plain_pip": 83.1,
+            "logit_lens": 1914.3,
+            "j_lens": 132.5,
+            "r_lens": 103.2
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multihop_experiment/month-7-namedafter.json",
+          "num_positions": 4,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "pred-valentines-prevmonth",
+          "example_id": "pred-valentines-prevmonth",
+          "group_kind": null,
+          "margin": 3.77,
+          "mean_ranks": {
+            "plain_pip": 30.5,
+            "logit_lens": 1673.5,
+            "j_lens": 339.3,
+            "r_lens": 34.3
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multihop_experiment/pred-valentines-prevmonth.json",
+          "num_positions": 5,
+          "hit_positions": [
+            8,
+            11,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "task": "poetry_experiment",
+      "title": "Poetry",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "couplet-trap-map",
+          "example_id": "couplet-trap-map",
+          "group_kind": null,
+          "margin": 17660.16,
+          "mean_ranks": {
+            "plain_pip": 3699.8,
+            "logit_lens": 21360.0,
+            "j_lens": 67349.4,
+            "r_lens": 42600.6
+          },
+          "best_baseline": "logit_lens",
+          "file": "data/poetry_experiment/couplet-trap-map.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "couplet-smoke-spoke",
+          "example_id": "couplet-smoke-spoke",
+          "group_kind": null,
+          "margin": 16936.06,
+          "mean_ranks": {
+            "plain_pip": 16280.3,
+            "logit_lens": 33216.3,
+            "j_lens": 54243.1,
+            "r_lens": 39416.9
+          },
+          "best_baseline": "logit_lens",
+          "file": "data/poetry_experiment/couplet-smoke-spoke.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "couplet-gold-cold",
+          "example_id": "couplet-gold-cold",
+          "group_kind": null,
+          "margin": 14008.23,
+          "mean_ranks": {
+            "plain_pip": 1076.6,
+            "logit_lens": 15109.6,
+            "j_lens": 63074.1,
+            "r_lens": 15084.8
+          },
+          "best_baseline": "r_lens",
+          "file": "data/poetry_experiment/couplet-gold-cold.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "couplet-tree-three",
+          "example_id": "couplet-tree-three",
+          "group_kind": null,
+          "margin": 10802.35,
+          "mean_ranks": {
+            "plain_pip": 532.5,
+            "logit_lens": 17813.6,
+            "j_lens": 52245.3,
+            "r_lens": 11334.8
+          },
+          "best_baseline": "r_lens",
+          "file": "data/poetry_experiment/couplet-tree-three.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "couplet-clear-year",
+          "example_id": "couplet-clear-year",
+          "group_kind": null,
+          "margin": 6950.1,
+          "mean_ranks": {
+            "plain_pip": 2331.8,
+            "logit_lens": 33048.5,
+            "j_lens": 25096.2,
+            "r_lens": 9281.9
+          },
+          "best_baseline": "r_lens",
+          "file": "data/poetry_experiment/couplet-clear-year.json",
+          "num_positions": 1,
+          "hit_positions": []
+        }
+      ]
+    },
+    {
+      "task": "association_experiment",
+      "title": "Association",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "darwin",
+          "example_id": "darwin",
+          "group_kind": null,
+          "margin": 51864.84,
+          "mean_ranks": {
+            "plain_pip": 7095.2,
+            "logit_lens": 88466.3,
+            "j_lens": 99531.3,
+            "r_lens": 58960.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/association_experiment/darwin.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "pt-agua",
+          "example_id": "pt-agua",
+          "group_kind": null,
+          "margin": 26231.81,
+          "mean_ranks": {
+            "plain_pip": 20703.9,
+            "logit_lens": 46935.7,
+            "j_lens": 64399.1,
+            "r_lens": 88414.1
+          },
+          "best_baseline": "logit_lens",
+          "file": "data/association_experiment/pt-agua.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "churchill",
+          "example_id": "churchill",
+          "group_kind": null,
+          "margin": 19993.19,
+          "mean_ranks": {
+            "plain_pip": 18775.2,
+            "logit_lens": 45370.6,
+            "j_lens": 85323.7,
+            "r_lens": 38768.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/association_experiment/churchill.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "store-h",
+          "example_id": "store-h",
+          "group_kind": null,
+          "margin": 16862.26,
+          "mean_ranks": {
+            "plain_pip": 3690.6,
+            "logit_lens": 58185.1,
+            "j_lens": 79847.9,
+            "r_lens": 20552.8
+          },
+          "best_baseline": "r_lens",
+          "file": "data/association_experiment/store-h.json",
+          "num_positions": 1,
+          "hit_positions": []
+        },
+        {
+          "appended": false,
+          "uid": "field-h",
+          "example_id": "field-h",
+          "group_kind": null,
+          "margin": 14555.39,
+          "mean_ranks": {
+            "plain_pip": 2570.0,
+            "logit_lens": 29148.1,
+            "j_lens": 22029.4,
+            "r_lens": 17125.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/association_experiment/field-h.json",
+          "num_positions": 1,
+          "hit_positions": []
+        }
+      ]
+    },
+    {
+      "task": "multilingual_experiment",
+      "title": "Multilingual",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "pt-time-old-new",
+          "example_id": "pt-time-old-new",
+          "group_kind": null,
+          "margin": 897.9,
+          "mean_ranks": {
+            "plain_pip": 274.5,
+            "logit_lens": 1315.5,
+            "j_lens": 2985.9,
+            "r_lens": 1172.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/pt-time-old-new.json",
+          "num_positions": 1,
+          "hit_positions": [
+            8
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "pt-double-two",
+          "example_id": "pt-double-two",
+          "group_kind": null,
+          "margin": 585.48,
+          "mean_ranks": {
+            "plain_pip": 179.4,
+            "logit_lens": 1293.7,
+            "j_lens": 3972.2,
+            "r_lens": 764.9
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/pt-double-two.json",
+          "num_positions": 1,
+          "hit_positions": [
+            5
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "pt-place-near-far",
+          "example_id": "pt-place-near-far",
+          "group_kind": null,
+          "margin": 580.55,
+          "mean_ranks": {
+            "plain_pip": 744.5,
+            "logit_lens": 1558.5,
+            "j_lens": 3457.5,
+            "r_lens": 1325.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/pt-place-near-far.json",
+          "num_positions": 1,
+          "hit_positions": [
+            7
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "de-month-after-jul",
+          "example_id": "de-month-after-jul",
+          "group_kind": null,
+          "margin": 516.32,
+          "mean_ranks": {
+            "plain_pip": 789.9,
+            "logit_lens": 7467.8,
+            "j_lens": 3295.9,
+            "r_lens": 1306.2
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/de-month-after-jul.json",
+          "num_positions": 1,
+          "hit_positions": [
+            5
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "de-place-near-far",
+          "example_id": "de-place-near-far",
+          "group_kind": null,
+          "margin": 319.94,
+          "mean_ranks": {
+            "plain_pip": 490.6,
+            "logit_lens": 1955.0,
+            "j_lens": 2044.5,
+            "r_lens": 810.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/de-place-near-far.json",
+          "num_positions": 1,
+          "hit_positions": [
+            7
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "de-place-up-down",
+          "example_id": "de-place-up-down",
+          "group_kind": null,
+          "margin": 313.16,
+          "mean_ranks": {
+            "plain_pip": 461.4,
+            "logit_lens": 856.1,
+            "j_lens": 1319.5,
+            "r_lens": 774.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/de-place-up-down.json",
+          "num_positions": 1,
+          "hit_positions": [
+            7
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "thai-color-blood",
+          "example_id": "thai-color-blood",
+          "group_kind": null,
+          "margin": 242.97,
+          "mean_ranks": {
+            "plain_pip": 133.1,
+            "logit_lens": 2141.5,
+            "j_lens": 692.9,
+            "r_lens": 376.0
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/thai-color-blood.json",
+          "num_positions": 1,
+          "hit_positions": [
+            9
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "pt-month-after-apr",
+          "example_id": "pt-month-after-apr",
+          "group_kind": null,
+          "margin": 191.32,
+          "mean_ranks": {
+            "plain_pip": 577.8,
+            "logit_lens": 849.5,
+            "j_lens": 2526.6,
+            "r_lens": 769.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/pt-month-after-apr.json",
+          "num_positions": 1,
+          "hit_positions": [
+            6
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "de-month-after-jan",
+          "example_id": "de-month-after-jan",
+          "group_kind": null,
+          "margin": 130.19,
+          "mean_ranks": {
+            "plain_pip": 1066.5,
+            "logit_lens": 6350.2,
+            "j_lens": 3517.5,
+            "r_lens": 1196.7
+          },
+          "best_baseline": "r_lens",
+          "file": "data/multilingual_experiment/de-month-after-jan.json",
+          "num_positions": 1,
+          "hit_positions": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "task": "order_ops_experiment",
+      "title": "Order of operations",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "nested-add-add-mult",
+          "example_id": "nested-add-add-mult",
+          "group_kind": null,
+          "margin": 39.42,
+          "mean_ranks": {
+            "plain_pip": 10.3,
+            "logit_lens": 306.2,
+            "j_lens": 417.4,
+            "r_lens": 49.7
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/nested-add-add-mult.json",
+          "num_positions": 1,
+          "hit_positions": [
+            14
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "chain-sub-mult-sub",
+          "example_id": "chain-sub-mult-sub",
+          "group_kind": null,
+          "margin": 34.13,
+          "mean_ranks": {
+            "plain_pip": 7.8,
+            "logit_lens": 598.8,
+            "j_lens": 348.8,
+            "r_lens": 41.9
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/chain-sub-mult-sub.json",
+          "num_positions": 1,
+          "hit_positions": [
+            12
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "mult-mult-left",
+          "example_id": "mult-mult-left",
+          "group_kind": null,
+          "margin": 32.29,
+          "mean_ranks": {
+            "plain_pip": 5.8,
+            "logit_lens": 38.1,
+            "j_lens": 349.5,
+            "r_lens": 38.5
+          },
+          "best_baseline": "logit_lens",
+          "file": "data/order_ops_experiment/mult-mult-left.json",
+          "num_positions": 1,
+          "hit_positions": [
+            8
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "mult-parens-add",
+          "example_id": "mult-parens-add",
+          "group_kind": null,
+          "margin": 30.29,
+          "mean_ranks": {
+            "plain_pip": 7.5,
+            "logit_lens": 687.7,
+            "j_lens": 392.4,
+            "r_lens": 37.8
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/mult-parens-add.json",
+          "num_positions": 1,
+          "hit_positions": [
+            9
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "word-parens",
+          "example_id": "word-parens",
+          "group_kind": null,
+          "margin": 25.74,
+          "mean_ranks": {
+            "plain_pip": 5.5,
+            "logit_lens": 116.5,
+            "j_lens": 130.9,
+            "r_lens": 31.2
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/word-parens.json",
+          "num_positions": 1,
+          "hit_positions": [
+            12
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "add-add-add",
+          "example_id": "add-add-add",
+          "group_kind": null,
+          "margin": 23.32,
+          "mean_ranks": {
+            "plain_pip": 3.8,
+            "logit_lens": 135.9,
+            "j_lens": 67.5,
+            "r_lens": 27.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/add-add-add.json",
+          "num_positions": 1,
+          "hit_positions": [
+            11
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "nested-sub-div-mult",
+          "example_id": "nested-sub-div-mult",
+          "group_kind": null,
+          "margin": 23.06,
+          "mean_ranks": {
+            "plain_pip": 3.6,
+            "logit_lens": 268.0,
+            "j_lens": 365.5,
+            "r_lens": 26.7
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/nested-sub-div-mult.json",
+          "num_positions": 1,
+          "hit_positions": [
+            15
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "square-mult",
+          "example_id": "square-mult",
+          "group_kind": null,
+          "margin": 22.1,
+          "mean_ranks": {
+            "plain_pip": 3.1,
+            "logit_lens": 25.2,
+            "j_lens": 614.4,
+            "r_lens": 28.8
+          },
+          "best_baseline": "logit_lens",
+          "file": "data/order_ops_experiment/square-mult.json",
+          "num_positions": 1,
+          "hit_positions": [
+            8
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "nested-sub-add-mult",
+          "example_id": "nested-sub-add-mult",
+          "group_kind": null,
+          "margin": 21.16,
+          "mean_ranks": {
+            "plain_pip": 6.5,
+            "logit_lens": 34.3,
+            "j_lens": 382.8,
+            "r_lens": 27.6
+          },
+          "best_baseline": "r_lens",
+          "file": "data/order_ops_experiment/nested-sub-add-mult.json",
+          "num_positions": 1,
+          "hit_positions": [
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "task": "directed_modulation",
+      "title": "Directed modulation",
+      "examples": [
+        {
+          "appended": false,
+          "uid": "math_05_9-5::focus",
+          "example_id": "math_05_9-5",
+          "group_kind": "focus",
+          "margin": 657.1,
+          "mean_ranks": {
+            "plain_pip": 64.2,
+            "logit_lens": 1982.6,
+            "j_lens": 2373.0,
+            "r_lens": 721.3
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_05_9-5--focus.json",
+          "num_positions": 11,
+          "hit_positions": [
+            43
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "topic_04_chess_pieces::focus",
+          "example_id": "topic_04_chess_pieces",
+          "group_kind": "focus",
+          "margin": 591.35,
+          "mean_ranks": {
+            "plain_pip": 61.0,
+            "logit_lens": 1439.5,
+            "j_lens": 2223.9,
+            "r_lens": 652.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/topic_04_chess_pieces--focus.json",
+          "num_positions": 15,
+          "hit_positions": [
+            35,
+            45,
+            47
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "math_05_9-5::suppress",
+          "example_id": "math_05_9-5",
+          "group_kind": "suppress",
+          "margin": 525.81,
+          "mean_ranks": {
+            "plain_pip": 34.6,
+            "logit_lens": 1885.6,
+            "j_lens": 1921.0,
+            "r_lens": 560.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_05_9-5--suppress.json",
+          "num_positions": 11,
+          "hit_positions": [
+            43
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "topic_04_chess_pieces::control",
+          "example_id": "topic_04_chess_pieces",
+          "group_kind": "control",
+          "margin": 289.03,
+          "mean_ranks": {
+            "plain_pip": 36.5,
+            "logit_lens": 861.3,
+            "j_lens": 1495.8,
+            "r_lens": 325.5
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/topic_04_chess_pieces--control.json",
+          "num_positions": 15,
+          "hit_positions": [
+            37,
+            39,
+            40,
+            46,
+            47,
+            49
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "math_01_5+4::focus",
+          "example_id": "math_01_5+4",
+          "group_kind": "focus",
+          "margin": 249.45,
+          "mean_ranks": {
+            "plain_pip": 99.0,
+            "logit_lens": 536.0,
+            "j_lens": 871.6,
+            "r_lens": 348.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_01_5_4--focus.json",
+          "num_positions": 9,
+          "hit_positions": [
+            37,
+            40,
+            41,
+            43
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "math_09_4*4-9::suppress",
+          "example_id": "math_09_4*4-9",
+          "group_kind": "suppress",
+          "margin": 220.06,
+          "mean_ranks": {
+            "plain_pip": 65.3,
+            "logit_lens": 445.0,
+            "j_lens": 714.8,
+            "r_lens": 285.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_09_4_4-9--suppress.json",
+          "num_positions": 13,
+          "hit_positions": [
+            46
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "math_01_5+4::control",
+          "example_id": "math_01_5+4",
+          "group_kind": "control",
+          "margin": 202.48,
+          "mean_ranks": {
+            "plain_pip": 99.9,
+            "logit_lens": 436.9,
+            "j_lens": 908.5,
+            "r_lens": 302.4
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_01_5_4--control.json",
+          "num_positions": 9,
+          "hit_positions": [
+            29
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "math_02_3*3::suppress",
+          "example_id": "math_02_3*3",
+          "group_kind": "suppress",
+          "margin": 152.58,
+          "mean_ranks": {
+            "plain_pip": 35.1,
+            "logit_lens": 300.1,
+            "j_lens": 666.2,
+            "r_lens": 187.7
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/math_02_3_3--suppress.json",
+          "num_positions": 9,
+          "hit_positions": [
+            31
+          ]
+        },
+        {
+          "appended": false,
+          "uid": "topic_07_farm_animals::focus",
+          "example_id": "topic_07_farm_animals",
+          "group_kind": "focus",
+          "margin": 124.61,
+          "mean_ranks": {
+            "plain_pip": 52.5,
+            "logit_lens": 1879.2,
+            "j_lens": 335.9,
+            "r_lens": 177.1
+          },
+          "best_baseline": "r_lens",
+          "file": "data/directed_modulation/topic_07_farm_animals--focus.json",
+          "num_positions": 14,
+          "hit_positions": [
+            42,
+            48,
+            49
+          ]
+        }
+      ]
+    }
+  ],
+  "method_order": [
+    "plain_pip",
+    "logit_lens",
+    "j_lens",
+    "r_lens"
+  ],
+  "method_labels": {
+    "plain_pip": "Ours (PIP)",
+    "logit_lens": "Logit lens",
+    "j_lens": "J-lens",
+    "r_lens": "R-lens"
+  }
+}

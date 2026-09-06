@@ -1,0 +1,218 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>PIP lens explorer</title>
+<style>
+  :root{--bg:#fbfbfa;--fg:#1a1a19;--mut:#6b6b66;--line:#e2e2dd;--card:#fff;
+        --ours:#c0392b;--hi:#fff3b0;--hiln:#e8c400;--pos:#1a7f4b;--neg:#a33;}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+       background:var(--bg);color:var(--fg)}
+  header{padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card);
+         position:sticky;top:0;z-index:20}
+  h1{margin:0 0 3px;font-size:16px;font-weight:650}
+  .sub{color:var(--mut);font-size:12px}
+  .tabs{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .tab{padding:5px 11px;border:1px solid var(--line);border-radius:99px;background:var(--bg);
+       cursor:pointer;font-size:12.5px}
+  .tab:hover{border-color:#bbb}
+  .tab.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .wrap{display:grid;grid-template-columns:298px 1fr;gap:0;align-items:start}
+  aside{border-right:1px solid var(--line);height:calc(100vh - var(--hh));overflow:auto;
+        position:sticky;top:var(--hh);background:var(--card)}
+  .ex{padding:9px 13px;border-bottom:1px solid var(--line);cursor:pointer}
+  .ex:hover{background:#f4f4f0}
+  .ex.on{background:#eef3ff;box-shadow:inset 3px 0 0 var(--ours)}
+  .ex .id{font-weight:600;font-size:12.5px;word-break:break-word}
+  main{padding:16px 20px 60px;min-width:0}
+  .bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+  .btn{padding:5px 11px;border:1px solid var(--line);border-radius:6px;background:var(--card);
+       cursor:pointer;font-size:12.5px}
+  .btn.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .hint{font-size:11.5px;color:var(--mut)}
+  .prompt{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+          margin-bottom:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+          font-size:12.5px;line-height:2;word-break:break-word}
+  .tk{padding:1px 2px;border-radius:3px}
+  .tk.anchor{background:var(--ours);color:#fff;font-weight:700}
+  .tk.anchor.sel{background:#f7ded9;color:#8c2a20;cursor:pointer;
+                 box-shadow:inset 0 -2px 0 var(--ours)}
+  .tk.anchor.sel:hover{background:var(--ours);color:#fff}
+  .tk.anchor.sel.hit{box-shadow:inset 0 -3px 0 var(--pos)}
+  .tk.anchor.sel.hit::after{content:"●";font-size:8px;color:var(--pos);vertical-align:super}
+  .tgt{display:inline-block;background:var(--hi);border:1px solid var(--hiln);border-radius:4px;
+       padding:0 5px;margin:0 3px 3px 0;font-family:ui-monospace,Menlo,monospace;font-size:11.5px}
+  .scroll{overflow:auto;max-height:72vh;border:1px solid var(--line);border-radius:6px}
+  table{border-collapse:separate;border-spacing:0;width:100%;background:var(--card);font-size:12px}
+  th,td{border:1px solid var(--line);padding:5px 7px;vertical-align:top;text-align:left}
+  thead th{background:#f4f4f0;position:sticky;top:0;z-index:6;font-size:11.5px;
+           box-shadow:inset 0 -1px 0 var(--line)}
+  th.ours,td.ours{background:#fdf3f2}
+  th.ours{background:#fbe6e3}
+  td.ly{text-align:right;font-variant-numeric:tabular-nums;color:var(--mut);width:44px;
+        font-weight:600;background:#f8f8f5}
+  .tok{display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,Menlo,monospace;
+       font-size:11.5px;padding:0 2px;border-radius:3px}
+  .tok.hit{background:var(--hi);outline:1px solid var(--hiln);font-weight:700}
+  .tok .p{color:var(--mut);font-variant-numeric:tabular-nums}
+  .tok.hit .p{color:#8a6d00}
+  .cv{display:flex;justify-content:space-between;gap:8px;font-family:ui-monospace,Menlo,monospace;
+      font-size:11.5px}
+  .cv .v{font-variant-numeric:tabular-nums;font-weight:600}
+  .na{color:#b9b9b3;font-style:italic}
+  .empty{padding:40px;text-align:center;color:var(--mut)}
+  .note{font-size:11.5px;color:var(--mut);margin:10px 0 0;max-width:1000px}
+</style>
+
+<header>
+  <h1>PIP lens explorer — cherry-picked examples</h1>
+  <div class="sub">Columns: <b>Ours (PIP)</b>, then logit lens, J-lens, R-lens.</div>
+  <div class="tabs" id="tabs"></div>
+</header>
+
+<div class="wrap">
+  <aside id="list"></aside>
+  <main id="main"><div class="empty">Loading…</div></main>
+</div>
+
+<script>
+const S = {index:null, task:null, uid:null, data:null, pos:null, view:"top"};
+const MO = ["plain_pip","logit_lens","j_lens","r_lens"];
+const ML = {plain_pip:"Ours (PIP)", logit_lens:"Logit lens", j_lens:"J-lens", r_lens:"R-lens"};
+
+const el = (t,c,x) => { const n=document.createElement(t); if(c)n.className=c;
+                        if(x!==undefined)n.textContent=x; return n; };
+function syncHeader(){
+  const h=document.querySelector("header");
+  if(h) document.documentElement.style.setProperty("--hh", h.offsetHeight+"px");
+}
+addEventListener("resize", syncHeader);
+
+async function boot(){
+  S.index = await (await fetch("data/index.json")).json();
+  const tabs = document.getElementById("tabs");
+  S.index.tasks.forEach(t=>{
+    const b = el("div","tab",`${t.title} (${t.examples.length})`);
+    b.onclick = ()=>selectTask(t.task);
+    b.dataset.task = t.task;
+    tabs.appendChild(b);
+  });
+  const first = S.index.tasks.find(t=>t.examples.length);
+  if(first) selectTask(first.task);
+  else document.getElementById("main").innerHTML='<div class="empty">No examples.</div>';
+}
+
+function selectTask(task){
+  S.task = task;
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("on", b.dataset.task===task));
+  const t = S.index.tasks.find(x=>x.task===task);
+  const list = document.getElementById("list"); list.innerHTML="";
+  t.examples.forEach((e,i)=>{
+    const d = el("div","ex");
+    d.dataset.uid = e.uid;
+    const name = el("div","id", `${i+1}. ${e.example_id}${e.group_kind?"  ["+e.group_kind+"]":""}`);
+    d.append(name);
+    d.onclick = ()=>selectExample(e);
+    list.appendChild(d);
+  });
+  if(t.examples.length) selectExample(t.examples[0]);
+  else document.getElementById("main").innerHTML='<div class="empty">No example where PIP beats every baseline in this task.</div>';
+}
+
+async function selectExample(e){
+  S.uid = e.uid;
+  document.querySelectorAll(".ex").forEach(d=>d.classList.toggle("on", d.dataset.uid===e.uid));
+  S.data = await (await fetch(e.file)).json();
+  S.hits = e.hit_positions || [];
+  // Open on a position where our method actually has a top-10 highlight, so the first
+  // thing shown is never an empty table; fall back to the first probed position.
+  S.pos = S.hits.length ? S.hits[0] : S.data.positions[0];
+  render();
+}
+
+function render(){
+  const d = S.data, m = document.getElementById("main");
+  m.innerHTML = "";
+
+  const bar = el("div","bar");
+  const b1 = el("div","btn"+(S.view==="top"?" on":""),"Top-10 tokens");
+  b1.onclick=()=>{S.view="top";render();};
+  const b2 = el("div","btn"+(S.view==="cent"?" on":""),"Centered logits");
+  b2.onclick=()=>{S.view="cent";render();};
+  bar.append(b1,b2);
+
+  const multi = d.positions.length>1;
+  if(multi){
+    const n=(S.hits||[]).length;
+    bar.append(el("span","hint",
+      `click a word in the prompt to probe it${n?`  ·  ${n} marked ● have a top-10 hit for our method`:""}`));
+  }
+  m.appendChild(bar);
+
+  const pr = el("div","prompt");
+  const anchors = new Set(d.positions);
+  d.prompt_tokens.forEach((w,i)=>{
+    const isAnchor = anchors.has(i);
+    const isHit = (S.hits||[]).includes(i);
+    const cls = isAnchor ? (i===S.pos ? "tk anchor" : "tk anchor sel" + (isHit?" hit":"")) : "tk";
+    const span = el("span", cls, w);
+    if(isAnchor && multi){
+      span.title = isHit ? "probe this token — our method has a top-10 hit here"
+                         : "probe this token";
+      span.onclick = ()=>{ S.pos = i; render(); };
+    } else if(isAnchor){
+      span.title = "the probed token";
+    }
+    pr.appendChild(span);
+  });
+  m.appendChild(pr);
+
+  const tw = el("div"); tw.style.marginBottom="12px";
+  tw.append(el("span","sub","target words: "));
+  d.target_words.forEach(w=>tw.appendChild(el("span","tgt",w)));
+  m.appendChild(tw);
+
+  const P = d.by_position[String(S.pos)];
+  const allLayers = [...new Set(MO.flatMap(k=>P[k].layers))].sort((a,b)=>b-a);
+
+  const table = el("table");
+  const thead = el("thead");
+  const hr = el("tr"); hr.appendChild(el("th","","layer"));
+  MO.forEach(k=>{ const th=el("th",k==="plain_pip"?"ours":"",ML[k]); hr.appendChild(th); });
+  thead.appendChild(hr); table.appendChild(thead);
+  const tbody = el("tbody");
+
+  allLayers.forEach(L=>{
+    const tr = el("tr");
+    tr.appendChild(el("td","ly",String(L)));
+    MO.forEach(k=>{
+      const td = el("td", k==="plain_pip"?"ours":"");
+      const entry = P[k].by_layer[String(L)];
+      if(!entry){ td.appendChild(el("div","na","no translator")); tr.appendChild(td); return; }
+      if(S.view==="top"){
+        entry.top.forEach(t=>{
+          const row = el("div","tok"+(t.t?" hit":""));
+          row.append(el("span","w",t.w), el("span","p",t.p.toFixed(3)));
+          td.appendChild(row);
+        });
+      } else {
+        d.target_words.forEach((w,i)=>{
+          const row = el("div","cv");
+          row.append(el("span","w",w), el("span","v",entry.centered[i].toFixed(2)));
+          td.appendChild(row);
+        });
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  const scroll = el("div","scroll"); scroll.appendChild(table); m.appendChild(scroll);
+
+  const note = el("p","note", S.view==="top"
+    ? "Top-10 tokens per layer. A cell is highlighted when that token is one of the example's target words. Layers descend from 32."
+    : "Centered logit per target word: the word's logit minus the mean logit over the whole 248,320-token vocabulary, so 0 = exactly the average vocabulary entry. No highlighting.");
+  m.appendChild(note);
+}
+syncHeader();
+boot();
+</script>
